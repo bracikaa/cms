@@ -7,16 +7,17 @@
     <div class="container">
 
         <div class="row">
-            <h1 class="page-header">
-                All Posts
-                <small></small>
-            </h1>
 
             <!-- Blog Entries Column -->
         <div class="col-md-8">
             
             <?php
-                $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC ";
+            
+                if(isset($_GET['category']))
+                {
+                    $post_category_id = $_GET['category'];
+                }
+                $query = "SELECT * FROM posts where post_category_id = {$post_category_id} ";
                 $select_all_posts_query = mysqli_query($connection, $query);
             
                 while($row = mysqli_fetch_assoc($select_all_posts_query))
@@ -31,6 +32,15 @@
                     
             ?>
             
+            <h1 class="page-header">
+                Categories
+                <?php if(isset($_GET['category_title']))
+                {
+                $category_title = $_GET['category_title'];
+                echo "<small>$category_title</small>";
+                
+                } ?>
+            </h1>
 
             <!-- First Blog Post -->
             <h2>
@@ -44,7 +54,7 @@
             <img class="img-responsive" src="<?php echo "images/$post_image"; ?>" alt="">
             <hr>
             <p><?php echo $post_content ?></p>
-            <a class="btn btn-primary" href="post.php?p_id=<?php echo $post_id ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
             <hr>
                 
@@ -61,3 +71,4 @@
         <hr>
 <?php include "includes/footer.php"; ?>
 
+ 

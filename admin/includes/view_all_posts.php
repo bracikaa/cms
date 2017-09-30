@@ -10,11 +10,13 @@
                                     <th>Tags</th>
                                     <th>Comments</th>
                                     <th>Date</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                <?php
-                                    $query = "SELECT * FROM posts";
+                                    $query = "SELECT * FROM posts ";
                                     $select_posts_query = mysqli_query($connection, $query);
                                     
                                     while($row = mysqli_fetch_assoc($select_posts_query))
@@ -57,7 +59,9 @@
                                 {
                                     $the_post_id = $_GET['delete'];
                                     $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
-                                    $delete_query = mysqli_query($connection, $query); 
+                                    $delete_query = mysqli_query($connection, $query);
+                                    header("Location: posts.php");
+                                    
                                 }
                                 ?>
                                 

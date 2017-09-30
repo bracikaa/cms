@@ -99,9 +99,13 @@
         <input type="text" value = "<?php echo $post_author; ?>" class="form-control" name="author">
     </div>
 
-    <div class="form-group">
+   <div class="form-group">
         <label for="status">Post Status</label>
-        <input type="text" value = "<?php echo $post_status; ?>" class="form-control" name="status">
+                 <select class='form-control' name="status" id="">
+             <option value='draft'>Draft</option>
+             <option value = 'published'>Published</option>
+        </select>
+        <!-- <input type="text" class="form-control" name="status"> -->
     </div>
     
     <div class="form-group">
