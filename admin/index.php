@@ -12,9 +12,14 @@
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
+                        <?php if(isset($_GET['msg'])) { ?>
+                                <div class="alert alert-success">
+                                      <strong>Welcome back!</strong> You have successfully logged in <?php echo $_SESSION['user_name']; ?>!
+                                </div>
+                           <?php } ?>
                         <h1 class="page-header">
                             Blank Page
-                            <small>Subheading</small>
+                            <small><?php echo $_SESSION['user_name']; ?></small>
                         </h1>
                     </div>
                 </div>

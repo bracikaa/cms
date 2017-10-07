@@ -14,8 +14,22 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Blank Page
-                            <small>Subheading</small>
+                            Categories
+                            <?php /*if (isset($_SESSION['user_name'])) {
+                                echo "<small>by {$_SESSION['user_name']}</small>";
+                                }
+                                else
+                                {
+                                    echo "<small>by Admin</small>";
+                                }*/
+                            if (isset($_SESSION['user_name'])){
+                                user_connected($_SESSION['user_name']);
+                            }
+                            else
+                            {
+                                echo "<small>by Admin</small>";
+                            }
+                            ?>
                         </h1>
                         
                         <div class="col-xs-6">

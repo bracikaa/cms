@@ -1,6 +1,36 @@
             <div class="col-md-4">
  
                 <!-- Blog Search Well -->
+                
+                <div class="well wellbgcolor">
+                   <?php if(isset($_GET['msg'])) { ?>
+                                <div class="alert alert-danger">
+                                      <strong>Danger!</strong> Username or Password is incorrect!
+                                </div>
+                           <?php } ?>
+                    <h4>Log In</h4>
+                    <form action="includes/login.php" method="post">
+                    <div class="form-group">
+                       <label for="username">Username: </label>
+                        <input name="username" type="text" class="form-control" placeholder="Enter username...">
+                    </div>
+                    
+                    
+                      <div class="form-group">
+                       <label for="password">Password:</label>
+                        <input name="password" type="password" class="form-control" placeholder = "Enter password...">
+                     
+                        
+                    </div>
+                    
+                    <div class = "form-group">
+                            <button name="login" type="submit" class="btn btn-primary">Log In</button>
+                    </div>
+
+                    </form>
+                    <!-- /.input-group -->
+                </div>
+                
                 <div class="well">
                     <h4>Blog Search</h4>
                     <form action="search.php" method="post">

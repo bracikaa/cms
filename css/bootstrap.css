@@ -2723,6 +2723,11 @@ select.input-lg {
   height: 46px;
   line-height: 46px;
 }
+
+.wellbgcolor {
+    background-color: #DECBA4;
+}
+
 textarea.input-lg,
 select[multiple].input-lg {
   height: auto;
@@ -6564,3 +6569,5 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+

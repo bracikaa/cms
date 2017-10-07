@@ -13,8 +13,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Admin Page
-                            <small>by Admin</small>
+                            Posts
+                            <small>by <?php echo $_SESSION['user_name']; ?></small>
                         </h1>
                         
                             <?php 

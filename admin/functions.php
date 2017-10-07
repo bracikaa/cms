@@ -1,5 +1,11 @@
 <?php 
 
+    function user_connected($user_connected)
+    {
+        echo "<small>by {$user_connected}</small>";
+    }
+
+
     function confirm_query($result)
     {
         global $connection;
