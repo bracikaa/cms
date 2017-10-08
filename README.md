@@ -1,6 +1,11 @@
-# CONTENT MANAGEMENT SYSTEM WRITTEN IN PHP
+# CONTENT MANAGEMENT SYSTEM WRITTEN IN PHP USING REST
 
-	Written as a test project, started out following a tutorial on internet, but then I made something myself.
-	Works as a blogging app.
+##	Works as a blogging app.
 
+Includes the admin panel, the statistics widget and a full support for REST services.
+
+
+## Author
+
+Mehmed Duhovic
 
