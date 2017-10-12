@@ -16,6 +16,10 @@
         $create_user_query = mysqli_query($connection, $query);
         
         confirm_query($create_user_query);
+        
+        echo "<div class='alert alert-success'>";
+        echo "<strong>User Created! </strong>Go back to <a href='users.php?view_all_users'>View All Users!</a>";
+        echo "</div>";
     }
 ?>
   

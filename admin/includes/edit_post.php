@@ -63,7 +63,10 @@
         
         $update_post = mysqli_query($connection, $query);
         
-        confirm_query($update_post);       
+        confirm_query($update_post); 
+        echo "<div class='alert alert-success'>";
+        echo "<strong>Post Updated </strong> <a href='../post.php?p_id={$post_id}'>See Post! </a>";
+        echo "</div>";
 
 
     }
@@ -99,7 +102,7 @@
         <input type="text" value = "<?php echo $post_author; ?>" class="form-control" name="author">
     </div>
 
-   <div class="form-group">
+    <div class="form-group">
         <label for="status">Post Status</label>
                  <select class='form-control' name="status" id="">
              <option value='draft'>Draft</option>

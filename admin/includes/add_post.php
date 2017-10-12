@@ -22,6 +22,12 @@
         $create_post_query = mysqli_query($connection, $query);
         
         confirm_query($create_post_query);
+        $post_id = mysqli_insert_id($connection);
+        
+        
+        echo "<div class='alert alert-success'>";
+        echo "<strong>Post Updated </strong> <a href='../post.php?p_id={$post_id}'>See Post!</a>";
+        echo "</div>";
     }
 ?>
   

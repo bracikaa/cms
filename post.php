@@ -1,8 +1,9 @@
 <?php include "includes/db.php"; ?>
 <?php include "includes/header.php"; ?>
-
+<?php session_start(); ?>
     <!-- Navigation -->
 <?php include "includes/navigation.php"; ?>
+
     <!-- Page Content -->
     <div class="container">
 
@@ -10,6 +11,7 @@
 
             <!-- Blog Entries Column -->
         <div class="col-md-8">
+
             
             <?php
             
@@ -42,10 +44,21 @@
             <hr>
             <p class="lead">
                 by <?php echo $post_author ?>
+                
             </p>
+                <?php 
+                    if(isset($_SESSION['user_role']))
+                    {
+                        if($_SESSION['user_role'] == 'admin')
+                        {
+                            echo "<a href='admin/posts.php?source=edit_post&p_id=12'>";
+                            echo "<button type='button' class='btn btn-primary '>Edit This Post</button>";
+                            echo "</a>";
+                        }
+                    }
+                ?>
             <hr>
             <p><?php echo $post_content ?></p>
-            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
             <hr>
                 
@@ -56,27 +69,36 @@
                 <?php 
                     if(isset($_POST['create_comment']))
                     {
-                    
+
+
                         $comment_author = $_POST['comment_author'];
                         $comment_email = $_POST['comment_email'];
                         $comment_content = $_POST['comment_content'];
                         
-                        $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-                        $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now() )";
-                        
-                        $create_comment_query = mysqli_query($connection, $query);
-                        
-                        
-                        if($create_comment_query)
+                        if(empty($comment_author) && empty($comment_email) && empty($comment_content))
                         {
-                            $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                            $query .= "WHERE post_id = {$the_post_id} ";
-                            
-                            $update_comment_count_query = mysqli_query($connection, $query);
-                        }
-                        else if(!$create_comment_query)
-                        {
-                            die('QUERY FAILED '. mysqli_error($connection));
+                            echo "<div class='alert alert-danger'>";
+                            echo "<strong> Invalid Fields! </strong> Please Enter Valid Fields! </a>";
+                            echo "</div>";
+                        } else {
+
+                            $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
+                            $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now() )";
+
+                            $create_comment_query = mysqli_query($connection, $query);
+
+
+                            if($create_comment_query)
+                            {
+                                $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                                $query .= "WHERE post_id = {$the_post_id} ";
+
+                                $update_comment_count_query = mysqli_query($connection, $query);
+                            }
+                            else if(!$create_comment_query)
+                            {
+                                die('QUERY FAILED '. mysqli_error($connection));
+                            }
                         }
                     }
                 ?>

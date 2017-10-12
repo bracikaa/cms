@@ -74,8 +74,6 @@
                     echo "<option value='admin'>Admin</option>";
                 }
             ?>
-             
-             <option value = 'admin'>Admin</option>
         </select>
         <!-- <input type="text" class="form-control" name="status"> -->
     </div>
