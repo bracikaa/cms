@@ -1,59 +1,30 @@
 <?php include "includes/db.php"; ?>
 <?php session_start(); ?>
 <?php include "includes/header.php"; ?>
-<style>
-    
-.active_page
-{
-    background-color: #f5f5f5 !important;
-}
-    
-</style>
 
     <!-- Navigation -->
 <?php include "includes/navigation.php"; ?>
     <!-- Page Content -->
     <div class="container">
+        
+    <?php 
+        $the_post_id = $_GET['p_id'];
+        $the_post_author = $_GET['author'];
+        
+    ?>
 
         <div class="row">
             <h1 class="page-header">
                 All Posts
-                <small></small>
+                <small>by <?php echo $the_post_author; ?></small>
             </h1>
 
             <!-- Blog Entries Column -->
         <div class="col-md-8">
             
             <?php
-            
-                $count_post_query = "SELECT * FROM posts WHERE post_status = 'published' ";
-                $select_all_posts = mysqli_query($connection, $count_post_query);
-            
-                $count = mysqli_num_rows($select_all_posts);
-                $page = ceil($count / 4);
-            
-            
-                if(isset($_GET['page']))
-                {
-                    $page_c = $_GET['page'];
-                }
-                else 
-                {
-                    $page_c = "";
-                }
-            
-                if($page_c == "" || $page_c == 1)
-                {
-                    $page_count = 0;
-                }
-                else
-                {
-                    $page_count = ($page_c * 4) - 4;
-                }
-            
-                $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC LIMIT $page_count, 4 ";
+                $query = "SELECT * FROM posts WHERE post_author = '{$the_post_author}' AND post_status = 'published' ORDER BY post_id DESC ";
                 $select_all_posts_query = mysqli_query($connection, $query);
-
             
                 while($row = mysqli_fetch_assoc($select_all_posts_query))
                 {
@@ -73,7 +44,7 @@
                 <a href="post.php?p_id=<?php echo $post_id ?>"><?php echo $post_title ?></a>
             </h2>
             <p class="lead">
-                by <a href="post_author.php?author=<?php echo $post_author; ?>&p_id=<?php echo $post_id; ?>"><?php echo $post_author ?></a>
+                by <?php echo $post_author ?>
             </p>
             <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date ?></p>
             <hr>
@@ -88,31 +59,14 @@
                 
             <?php } ?>
 
-       <ul class="pager">
-       <?php
-            for($i = 1; $i <= $page; $i++)
-            {
-                if($i == $page_c)
-                {
-                    echo "<li><a class='active_page' href='index.php?page={$i}'>{$i}</a></li>";   
-                }
-                else
-                {
-                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";  
-                }
-                
-            }
-        ?>
-       </ul>
+
         </div>
             <!-- Blog Sidebar Widgets Column -->
 <?php include "includes/sidebar.php"; ?>
 
-
         </div>
         <!-- /.row -->
 
-       
         <hr>
 <?php include "includes/footer.php"; ?>
 

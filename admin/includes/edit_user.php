@@ -90,7 +90,7 @@
     
     <div class="form-group">
         <label for="user_password">Password</label>
-        <input type="password" class="form-control" name="user_password" value = "<?php echo $user_password; ?>">
+        <input type="password" class="form-control" name="user_password" value = "">
     </div>     
     
     <div class="form-group">

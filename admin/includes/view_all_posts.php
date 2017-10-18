@@ -1,7 +1,7 @@
 <script>
 function toggle(source) {
   checkboxes = document.getElementsByName('checkbox_array[]');
-  for(var i=0, n=checkboxes.length;i<n;i++) {
+  for(var i=0, n=checkboxes.length; i<n; i++) {
     checkboxes[i].checked = source.checked;
   }
 }
@@ -23,7 +23,29 @@ function toggle(source) {
                     $update_post_status = mysqli_query($connection, $query);
                     break;
                     
-                case 'delete':
+                case 'clone':
+                    $query="SELECT * FROM posts where post_id = {$check_box_value}";
+                    $clone_post_query = mysqli_query($connection, $query);
+                    while($row = mysqli_fetch_assoc($clone_post_query))
+                    {
+                        $post_id = $row['post_id'];
+                        $post_author = $row['post_author'];
+                        $post_title = $row['post_title'];
+                        $post_category = $row['post_category_id'];
+                        $post_status = $row['post_status'];
+                        $post_image = $row['post_image'];
+                        $post_tags = $row['post_tags'];
+                        $post_comments = $row['post_comment_count'];
+                        $post_date = $row['post_date'];
+                        $post_content = $row['post_content'];
+                        
+                        $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
+                        $query .= "VALUES('{$post_category}', '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}') ";
+                        $create_post_query = mysqli_query($connection, $query);
+                    }  
+                    break;
+                    
+                case 'delete':   
                     $query = "DELETE FROM posts WHERE post_id = {$check_box_value} ";
                     $delete_query = mysqli_query($connection, $query);
                     header("Location: posts.php");
@@ -43,11 +65,12 @@ function toggle(source) {
                                 <select class = "form-control" name="bulk_options" id="">
                                     <option value="draft">Draft</option>
                                     <option value="published">Publish</option>
+                                    <option value="clone">Clone</option>
                                     <option value="delete">Delete</option>
                                 </select>
                             </div>
                             <div class="col-xs-4">
-                                <input type="submit" name="bulk_update" class="btn btn-success" value="Apply">
+                                <input onClick=" javascript: return confirm('Are you sure you want to change the status of the Posts?')" type="submit" name="bulk_update" class="btn btn-success" value="Apply">
                                 <a href="posts.php?source=add_post" class="btn btn-primary">Add New Post</a>
                             </div>
                             
@@ -64,6 +87,7 @@ function toggle(source) {
                                     <th>Image</th>
                                     <th>Tags</th>
                                     <th>Comments</th>
+                                    <th>View Count</th>
                                     <th>Date</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
@@ -86,6 +110,7 @@ function toggle(source) {
                                         $post_tags = $row['post_tags'];
                                         $post_comments = $row['post_comment_count'];
                                         $post_date = $row['post_date'];
+                                        $post_view_count = $row['post_view_count'];
                                         
                                         echo "<tr>";
                                         echo "<td><input type='checkbox' class='check_box' name='checkbox_array[]' value={$post_id}></td>";
@@ -106,9 +131,10 @@ function toggle(source) {
                                         echo "<td><image width='100' src='../images/{$post_image}'></td>";
                                         echo "<td>{$post_tags}</td>";
                                         echo "<td>{$post_comments}</td>";
+                                        echo "<td><a href='posts.php?reset={$post_id}'>{$post_view_count}</a></td>";
                                         echo "<td>{$post_date}</td>";
                                         echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-                                        echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";
+                                        echo "<td><a onClick=\" javascript: return confirm('Are you sure you want to delete?') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
                                         echo "</tr>";
                         }
                                 
@@ -117,6 +143,15 @@ function toggle(source) {
                                     $the_post_id = $_GET['delete'];
                                     $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
                                     $delete_query = mysqli_query($connection, $query);
+                                    header("Location: posts.php");
+                                    
+                                }
+                                
+                                if (isset($_GET['reset']))
+                                {
+                                    $the_post_id = mysqli_real_escape_string($connection, $_GET['reset']);
+                                    $query = "UPDATE posts SET post_view_count = 0 WHERE post_id = {$the_post_id} ";
+                                    $reset_query = mysqli_query($connection, $query);
                                     header("Location: posts.php");
                                     
                                 }

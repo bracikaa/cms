@@ -27,14 +27,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>SB Admin</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin.css" rel="stylesheet">
-
+    <link href="css/styles.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -44,12 +44,31 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+    
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="tinymce/js/tinymce/tinymce.min.js"></script>
+
+    <script>
+        
+    $(document).ready(function(){
+        var div_box = "<div id='load-screen'><div id='loading'></div></div>";
+        $("body").prepend(div_box);
+        
+        $('#load-screen').delay(100).fadeOut(500, function(){
+            this.remove(); 
+        });
+    });
+         
+    </script>
+    
+    <script>tinymce.init({ selector:'textarea' });</script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="../tinymce/js/tinymce/tinymce.min.js"></script>
-    <script  type="text/javascript" src="js/scripts.js"></script>
+
+
+
     
 
 

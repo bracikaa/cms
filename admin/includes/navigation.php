@@ -1,4 +1,14 @@
-       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <script>
+                function loadUsers() {
+                    $.get("functions.php?usersonline=result", function(data){
+                       $(".usersonline").text(data); 
+                    });
+                }
+                setInterval(function(){
+                    loadUsers();
+                }, 500);
+            </script>  
+           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -11,8 +21,9 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
+               <li><a href="">Users Online: <span class="usersonline"></span></a></li>
                <li><a href="../index.php">Main Site</a></li>
-
+               
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
                      <?php echo $_SESSION['user_name']; ?>

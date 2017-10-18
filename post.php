@@ -18,21 +18,23 @@
                 if(isset($_GET['p_id']))
                 {
                     $the_post_id = $_GET['p_id'];
-                }
-                $query = "SELECT * FROM posts where post_id = {$the_post_id} ";
-            
-                $select_all_posts_query = mysqli_query($connection, $query);
-            
-                while($row = mysqli_fetch_assoc($select_all_posts_query))
-                {
-                    $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
-                    $post_date = $row['post_date'];
-                    $post_image = $row['post_image'];
-                    $post_content = $row['post_content'];
                     
+                    $view_query = "UPDATE posts SET post_view_count = post_view_count + 1 WHERE post_id = {$the_post_id}";
+                    $update_view_db_query = mysqli_query($connection, $view_query);
+                
+                    $query = "SELECT * FROM posts where post_id = {$the_post_id} ";
+                    $select_all_posts_query = mysqli_query($connection, $query);
+            
+                    while($row = mysqli_fetch_assoc($select_all_posts_query))
+                    {
+                        $post_title = $row['post_title'];
+                        $post_author = $row['post_author'];
+                        $post_date = $row['post_date'];
+                        $post_image = $row['post_image'];
+                        $post_content = $row['post_content'];
+
                     
-            ?>
+                    ?>
                 
             <h2>
                 <a href="#"><?php echo $post_title ?></a>
@@ -51,7 +53,7 @@
                     {
                         if($_SESSION['user_role'] == 'admin')
                         {
-                            echo "<a href='admin/posts.php?source=edit_post&p_id=12'>";
+                            echo "<a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>";
                             echo "<button type='button' class='btn btn-primary '>Edit This Post</button>";
                             echo "</a>";
                         }
@@ -153,7 +155,13 @@
                     </div>
                 </div>
                 
-                <?php } ?>
+                <?php } }
+                else 
+                {
+                    header("Location: index.php");
+                }
+            
+            ?>
         </div>
             <!-- Blog Sidebar Widgets Column -->
 <?php include "includes/sidebar.php"; ?>

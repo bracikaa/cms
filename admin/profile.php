@@ -28,7 +28,21 @@
         $user_role = $_POST['user_role'];
         $user_email = $_POST['user_email'];
         $user_name = $_POST['user_name'];
+            
+        $query = "SELECT user_randSalt from USERS ";
+        $select_randsalt_query = mysqli_query($connection, $query);
+            
+        if(!$select_randsalt_query)
+        {
+            die("Query Failed " . mysqli_error($connection));
+        }
+            
+            
+        $row = mysqli_fetch_assoc($select_randsalt_query);
+        $salt = $row['user_randSalt'];
+
         $user_password = $_POST['user_password'];
+        $hashed_password = crypt($user_password, $salt);
         
         $query = "UPDATE users SET ";
         $query .= "user_firstname = '{$user_firstname}', ";
@@ -36,7 +50,7 @@
         $query .= "user_role = '{$user_role}', ";
         $query .= "user_email = '{$user_email}', ";
         $query .= "user_name = '{$user_name}', ";
-        $query .= "user_password = '{$user_password}' ";
+        $query .= "user_password = '{$hashed_password}' ";
         $query .= "WHERE user_name = '{$username}' ";
         
         $update_user_query = mysqli_query($connection, $query);
@@ -94,8 +108,6 @@
                     echo "<option value='admin'>Admin</option>";
                 }
             ?>
-             
-             <option value = 'admin'>Admin</option>
         </select>
         <!-- <input type="text" class="form-control" name="status"> -->
     </div>
@@ -112,7 +124,7 @@
     
     <div class="form-group">
         <label for="user_password">Password</label>
-        <input type="password" class="form-control" name="user_password" value = "<?php echo $user_password; ?>">
+        <input type="password" class="form-control" name="user_password" value = "">
     </div>     
     
     <div class="form-group">

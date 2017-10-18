@@ -2,6 +2,7 @@
 <?php session_start(); ?>
 
 <?php 
+
     if(isset($_POST['login']))
     {
         $username = $_POST['username'];
@@ -26,13 +27,11 @@
             $db_user_firstname = $row['user_firstname'];
             $db_user_lastname = $row['user_lastname'];
             $db_user_role = $row['user_role'];
+            $db_salt = $row['user_randSalt'];
             
         }
-        if(($db_user_name !== $username &&  $db_user_password !== $password) || ($db_user_password !== $password && $db_user_name == $username))
-        {
-                header("Location: ../index.php?msg");
-        }
-        else if($db_user_name == $username &&  $db_user_password == $password)
+
+        if($db_user_name == $username && hash_equals($db_user_password, crypt($password, $db_user_password)))
         {
             $_SESSION['user_name'] = $db_user_name;
             $_SESSION['user_firstname'] = $db_user_firstname;
@@ -41,9 +40,10 @@
             
             header("Location: ../admin?msg");
         }
+        else if(($db_user_name !== $username && $db_user_password !== $password) || ($db_user_password !== $password && $db_user_name == $username))
+        {
+                header("Location: ../index.php?msg");
+        }
     }
-
-
-
 
 ?>

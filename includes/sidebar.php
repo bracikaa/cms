@@ -3,6 +3,7 @@
                 <!-- Blog Search Well -->
                 
                 <div class="well wellbgcolor">
+                  
                    <?php if(isset($_GET['msg'])) { ?>
                                 <div class="alert alert-danger">
                                       <strong>Danger!</strong> Username or Password is incorrect!
@@ -25,6 +26,7 @@
                     
                     <div class = "form-group">
                             <button name="login" type="submit" class="btn btn-primary">Log In</button>
+                            <a href="registration.php"><button type="button" class="btn btn-primary">Register</button></a>
                     </div>
 
                     </form>
@@ -74,8 +76,5 @@
                     </div>
                     <!-- /.row -->
                 </div>
-
-                <!-- Side Widget Well -->
-                <?php include "widget.php"; ?>
 
             </div>

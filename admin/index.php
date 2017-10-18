@@ -1,12 +1,7 @@
 <?php include "includes/header.php" ?>
     <div id="wrapper">
-
-
 <?php include "includes/navigation.php" ?>
-      
-       
-       
-       
+
         <div id="page-wrapper">
             <div class="container-fluid">
 
@@ -19,7 +14,7 @@
                                 </div>
                            <?php } ?>
                             <h1 class="page-header">
-                                Blank Page
+                                Index Panel
                                 <small><?php echo $_SESSION['user_name']; ?></small>
                             </h1>
                     </div>
