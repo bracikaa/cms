@@ -53,18 +53,17 @@
             $firstname = mysqli_real_escape_string($connection, $firstname);
             $lastname = mysqli_real_escape_string($connection, $lastname);
             $username = mysqli_real_escape_string($connection, $username);
-            $password = mysqli_real_escape_string($connection, $password);
+            //$password = mysqli_real_escape_string($connection, $password);
+            $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
             $email = mysqli_real_escape_string($connection, $email);
 
-            $query = "SELECT user_randSalt FROM users ";
+            //$query = "SELECT user_randSalt FROM users ";
+            //$select_salt = mysqli_query($connection, $query);
+            //checkQuery($select_salt);
 
-            $select_salt = mysqli_query($connection, $query);
-
-            checkQuery($select_salt);
-
-            $row = mysqli_fetch_assoc($select_salt);
-            $salt = $row['user_randSalt'];
-            $password = crypt($password, $salt);
+            //$row = mysqli_fetch_assoc($select_salt);
+            //$salt = $row['user_randSalt'];
+            //$password = crypt($password, $salt);
             
 
             $query = "INSERT INTO users (user_firstname, user_lastname, user_name, user_email, user_password, user_image, user_role) ";

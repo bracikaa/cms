@@ -1,3 +1,6 @@
+<?php include('delete_modal.php'); ?>
+
+
 <script>
 function toggle(source) {
   checkboxes = document.getElementsByName('checkbox_array[]');
@@ -5,6 +8,15 @@ function toggle(source) {
     checkboxes[i].checked = source.checked;
   }
 }
+    
+$(document).ready(function(){
+   $(".delete_link").on('click', function(){
+      var id = $(this).attr("rel");
+      var delete_url = "posts.php?delete=" + id + " ";
+      $(".modal_delete").attr("href", delete_url);
+       $("#myModal").modal('show');
+   });
+});
 </script>
 
     <?php 
@@ -130,11 +142,19 @@ function toggle(source) {
                                         echo "<td>{$post_status}</td>";
                                         echo "<td><image width='100' src='../images/{$post_image}'></td>";
                                         echo "<td>{$post_tags}</td>";
-                                        echo "<td>{$post_comments}</td>";
+                                        
+                                        $query = "SELECT * FROM comments WHERE comment_post_id = {$post_id} AND comment_status ='approved' ";
+                                        $count_comments_query = mysqli_query($connection, $query);
+                                        $row = mysqli_fetch_array($count_comments_query);
+                                        $comment_id = $row['comment_id'];
+                                        $num_of_comments = mysqli_num_rows($count_comments_query);
+                                        
+                                        echo "<td><a href='comments.php?post_comments_id={$post_id}'>{$num_of_comments}</a></td>";
                                         echo "<td><a href='posts.php?reset={$post_id}'>{$post_view_count}</a></td>";
                                         echo "<td>{$post_date}</td>";
                                         echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-                                        echo "<td><a onClick=\" javascript: return confirm('Are you sure you want to delete?') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
+                                        //echo "<td><a onClick=\" javascript: return confirm('Are you sure you want to delete?') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
+                                        echo "<td><a rel='{$post_id}' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
                                         echo "</tr>";
                         }
                                 

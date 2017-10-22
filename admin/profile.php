@@ -28,29 +28,19 @@
         $user_role = $_POST['user_role'];
         $user_email = $_POST['user_email'];
         $user_name = $_POST['user_name'];
-            
-        $query = "SELECT user_randSalt from USERS ";
-        $select_randsalt_query = mysqli_query($connection, $query);
-            
-        if(!$select_randsalt_query)
-        {
-            die("Query Failed " . mysqli_error($connection));
-        }
-            
-            
-        $row = mysqli_fetch_assoc($select_randsalt_query);
-        $salt = $row['user_randSalt'];
-
         $user_password = $_POST['user_password'];
-        $hashed_password = crypt($user_password, $salt);
+        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
+
         
+        $_SESSION['user_role'] =  $user_role;
+            
         $query = "UPDATE users SET ";
         $query .= "user_firstname = '{$user_firstname}', ";
         $query .= "user_lastname = '{$user_lastname}', ";
         $query .= "user_role = '{$user_role}', ";
         $query .= "user_email = '{$user_email}', ";
         $query .= "user_name = '{$user_name}', ";
-        $query .= "user_password = '{$hashed_password}' ";
+        $query .= "user_password = '{$user_password}' ";
         $query .= "WHERE user_name = '{$username}' ";
         
         $update_user_query = mysqli_query($connection, $query);

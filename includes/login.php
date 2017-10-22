@@ -31,7 +31,7 @@
             
         }
 
-        if($db_user_name == $username && hash_equals($db_user_password, crypt($password, $db_user_password)))
+        if($db_user_name == $username && password_verify($password, $db_user_password))
         {
             $_SESSION['user_name'] = $db_user_name;
             $_SESSION['user_firstname'] = $db_user_firstname;

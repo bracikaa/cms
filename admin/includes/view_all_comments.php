@@ -16,7 +16,16 @@
                             </thead>
                             <tbody>
                                <?php
-                                    $query = "SELECT * FROM comments";
+                                    if(isset($_GET['post_comments_id']))
+                                    {
+                                        $post_comments_id = mysqli_real_escape_string($connection, $_GET['post_comments_id']);
+                                        $query = "SELECT * FROM comments WHERE comment_post_id = '{$post_comments_id}' AND comment_status = 'approved' ";
+                                    }
+                                    else
+                                    {
+                                        $query = "SELECT * FROM comments ";
+                                    }
+                                    
                                     $select_comments_query = mysqli_query($connection, $query);
                                     
                                     while($row = mysqli_fetch_assoc($select_comments_query))

@@ -1,7 +1,7 @@
             <div class="col-md-4">
  
                 <!-- Blog Search Well -->
-                
+                <?php if (!isset($_SESSION['user_name'])) { ?>
                 <div class="well wellbgcolor">
                   
                    <?php if(isset($_GET['msg'])) { ?>
@@ -32,6 +32,7 @@
                     </form>
                     <!-- /.input-group -->
                 </div>
+                <?php } else {} ?>
                 
                 <div class="well">
                     <h4>Blog Search</h4>

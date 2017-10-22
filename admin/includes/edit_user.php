@@ -30,7 +30,8 @@
         $user_email = $_POST['user_email'];
         $user_name = $_POST['user_name'];
         $user_password = $_POST['user_password'];
-        
+        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
+
         $query = "UPDATE users SET ";
         $query .= "user_firstname = '{$user_firstname}', ";
         $query .= "user_lastname = '{$user_lastname}', ";

@@ -80,7 +80,7 @@
                         if(empty($comment_author) && empty($comment_email) && empty($comment_content))
                         {
                             echo "<div class='alert alert-danger'>";
-                            echo "<strong> Invalid Fields! </strong> Please Enter Valid Fields! </a>";
+                            echo "<p><strong> Invalid Fields! </strong> Please Enter Valid Fields!</p";
                             echo "</div>";
                         } else {
 
@@ -92,10 +92,9 @@
 
                             if($create_comment_query)
                             {
-                                $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                                $query .= "WHERE post_id = {$the_post_id} ";
-
-                                $update_comment_count_query = mysqli_query($connection, $query);
+                                //$query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                                //$query .= "WHERE post_id = {$the_post_id} ";
+                                //$update_comment_count_query = mysqli_query($connection, $query);
                             }
                             else if(!$create_comment_query)
                             {
