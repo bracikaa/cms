@@ -108,8 +108,18 @@ $(document).ready(function(){
                             <tbody>
                    
                                <?php
-                                    $query = "SELECT * FROM posts ORDER BY post_id DESC ";
+                                    //$query = "SELECT * FROM posts ORDER BY post_id DESC ";
+                                    $query = "SELECT posts.post_id, posts.post_author, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_view_count, categories.cat_id, categories.cat_title ";
+                                
+                                    $query .= " FROM posts LEFT JOIN categories ON posts.post_category_id = categories.cat_id ORDER BY posts.post_id DESC ";
+                                
+   
                                     $select_posts_query = mysqli_query($connection, $query);
+                                
+                                         if(!$select_posts_query)
+                                        {
+                                            die("Query Failed " . mysqli_error($connection));
+                                        }
                                     
                                     while($row = mysqli_fetch_assoc($select_posts_query))
                                     {
@@ -123,6 +133,8 @@ $(document).ready(function(){
                                         $post_comments = $row['post_comment_count'];
                                         $post_date = $row['post_date'];
                                         $post_view_count = $row['post_view_count'];
+                                        $cat_id = $row['cat_id'];
+                                        $cat_title = $row['cat_title'];
                                         
                                         echo "<tr>";
                                         echo "<td><input type='checkbox' class='check_box' name='checkbox_array[]' value={$post_id}></td>";
@@ -130,15 +142,15 @@ $(document).ready(function(){
                                         echo "<td>{$post_author}</td>";
                                         echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
                                         
-                                        $query_2 = "SELECT * FROM categories WHERE cat_id = $post_category ";
-                                        $select_categories_2 = mysqli_query($connection, $query_2);
-                                        while($row = mysqli_fetch_assoc($select_categories_2)){
-                                            $cat_id = $row['cat_id'];
-                                            $cat_title = $row['cat_title'];
+                                        //$query_2 = "SELECT * FROM categories WHERE cat_id = $post_category ";
+                                        //$select_categories_2 = mysqli_query($connection, $query_2);
+                                        //while($row = mysqli_fetch_assoc($select_categories_2)){
+                                        //    $cat_id = $row['cat_id'];
+                                        //    $cat_title = $row['cat_title'];
                                             
                                         
                                         echo "<td>{$cat_title}</td>";
-                                        }
+                                        //}
                                         echo "<td>{$post_status}</td>";
                                         echo "<td><image width='100' src='../images/{$post_image}'></td>";
                                         echo "<td>{$post_tags}</td>";

@@ -9,7 +9,7 @@ As of the new commit includes pagination, and extra features in the admin panel,
 Added bootstrap deleting feature instead of JS.
 
 95% finished.
-There are plans to add contact page and some other additions in the future, and of course refactor the code
+There are plans to add contact page and some other additions in the future, and of course refactor the code, need to improve login and registration especially
 
 
 ## Author

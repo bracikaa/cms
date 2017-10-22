@@ -14,6 +14,25 @@
             
     }
 
+    function check_username($username)
+    {
+        global $connection;
+        $query = "SELECT user_name FROM users WHERE user_name = '{$username}' ";
+        $check_username_query = mysqli_query($connection, $query);
+        
+        checkQuery($check_username_query);
+        
+        if(mysqli_num_rows($check_username_query) > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+
 
     if(isset($_POST['submit']))
     {
@@ -23,7 +42,7 @@
         $password = $_POST['password'];
         $email = $_POST['email'];
         
-        if(empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($email))
+        if(empty($firstname) || empty($lastname) || empty($username) || empty($password) || empty($email) || check_username($username))
         {
             echo "<div class='alert alert-danger col-md-6 col-md-offset-3'>";
             if(empty($firstname)) {
@@ -44,6 +63,10 @@
                                                             
            if(empty($email)) {
                 echo "<p><strong>Field Empty </strong> First Name should not be empty </p>";
+            }
+            
+            if(check_username($username)) {
+                echo "<p><strong>User exists </strong> User with this username already exists. </p>";
             }
             echo "</div>";
         }
